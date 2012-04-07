@@ -1,0 +1,6 @@
+name = User profile
+description = This is the user profile module.
+core = 7.x
+
+package = "Justread Module"
+project = "Justread package"

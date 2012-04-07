@@ -1,0 +1,21 @@
+<?php 
+
+/**
+ * This is the main development module which will be used as an API
+ * for development. This module contains some basic functionalities
+ * which are required during development and can be clubbed inside one module
+ */
+
+class Coremodel {
+  
+  protected $dev_mode = '';
+  
+  public function dsm($var) {
+    print '<div class="codemodel-dump">';
+    print '<pre>';
+    print_r ($var);
+    print '</pre>';
+    print '</div>';
+  }
+  
+}

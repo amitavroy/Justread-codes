@@ -1,0 +1,17 @@
+<?php 
+
+/**
+ * Implementing hook_theme()
+ */
+function userprofile_theme() {
+  
+}
+
+/**
+ * Implementing hook_node_view()
+ */
+function userprofile_node_view($node, $view_mode) {
+  
+  // Adding the user profile widget into the node's content.
+  
+}
