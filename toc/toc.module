@@ -1,0 +1,81 @@
+<?php 
+
+/**
+ * Implementing hook_theme()
+ */
+function toc_theme() {
+    return array(
+        'toccontent' => array(
+            'template' => 'toccontent',
+        ),
+        'toclist' => array(
+            'template' => 'toclist',
+        ),
+    );
+}
+
+/**
+ * Implementing hook_node_load()
+ */
+function toc_node_load($nodes, $types) {
+    foreach ($nodes as $node) {
+        // Only for article node content
+        if ($node->type == 'article') {
+            $node->toccontent = _nodeelements_generate_tocContent($node);
+            $node->toclist = _nodeelements_generate_tocList($node);
+        }
+    }
+}
+
+/**
+ * This function will generate the drop down list of the TOC
+ */
+function _nodeelements_generate_tocList($node) {
+	if (isset($node->field_sections) && !empty($node->field_sections[$node->language])) {
+
+		foreach ($node->field_sections[$node->language] as $key => $value) {
+			$fieldData[] = field_collection_item_load($value);
+			foreach ($fieldData as $key => $value) {
+				$tocBody[$key]['title'] = $value->field_section_title[$node->language][0]['value'];
+			}
+		}
+
+		$output = theme('toclist', array(
+			'tocBody' => $tocBody,
+		));
+	}
+
+	// Else send blank.
+	else {
+		$output = "";
+	}
+
+	return $output;
+}
+
+/**
+ * This function will generate the content of the TOC
+ */
+function _nodeelements_generate_tocContent($node) {
+	if (isset($node->field_sections) && !empty($node->field_sections[$node->language])) {
+
+		foreach ($node->field_sections[$node->language] as $key => $value) {
+			$fieldData[] = field_collection_item_load($value);
+			foreach ($fieldData as $key => $value) {
+				$tocBody[$key]['body'] = $value->field_section_body[$node->language][0]['value'];
+				$tocBody[$key]['title'] = $value->field_section_title[$node->language][0]['value'];
+			}
+		}
+
+		$output = theme('toccontent', array(
+			'tocBody' => $tocBody,
+		));
+	}
+
+	// Else send blank.
+	else {
+		$output = "";
+	}
+
+	return $output;
+}
