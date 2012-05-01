@@ -1,0 +1,10 @@
+name = Node content
+description = Custom node elements will come here.
+core = 7.x
+package = Drupal Examples
+version = VERSION
+
+; Information added by drupal.org packaging script on 2012-02-01
+version = "7.12"
+project = "Justread"
+datestamp = "1328134560"
