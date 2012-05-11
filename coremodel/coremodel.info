@@ -1,6 +1,0 @@
-name = Code Model
-description = This module is like an API for development. This will not do a lot of things to the site.
-core = 7.x
-
-package = "Justread Module"
-project = "Justread package"
