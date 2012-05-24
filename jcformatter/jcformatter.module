@@ -40,20 +40,19 @@ function jcformatter_field_formatter_settings_form($field, $instance, $view_mode
   $settings = $display['settings'];
   $element = array();
 
+  foreach (image_styles() as $id => $style) {
+    $options[$id] = $id;
+  }
+
   $element['pic_size'] = array(
     '#type' => 'select',
     '#title' => t('Button Size'),
     '#description'    => t('Select the image size'),
     '#default_value' => $settings['pic_size'],
-    '#options' => array(
-      'small'  => 'Small',
-      'medium' => 'Medium',
-      'large'  => 'Large',
-    ),
+    '#options' => $options,
   );
 
   return $element;
-
 }
 
 /**
@@ -62,7 +61,7 @@ function jcformatter_field_formatter_settings_form($field, $instance, $view_mode
 function jcformatter_field_formatter_settings_summary($field, $instance, $view_mode) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
-  $summary = t('Use a @size Facebook button with the tooltip', array(
+  $summary = t('Using "@size" for the gallery main image', array(
     '@size'     => $settings['pic_size'],
   )); // we use t() for translation and placeholders to guard against attacks
 
@@ -75,11 +74,12 @@ function jcformatter_field_formatter_settings_summary($field, $instance, $view_m
 function jcformatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $element = array();
   $settings = $display['settings'];
+  $data['image_style'] = $instance['display']['default']['settings']['pic_size'];
 
   switch ($display['type']) {
     case 'jc_gallery_simple':
       foreach ($items as $delta => $item) {
-        $data[$delta] = array(
+        $data['images'][$delta] = array(
           'alt' => $item['alt'],
           'title' => $item['alt'],
           'uri' => $item['uri'],
@@ -94,13 +94,4 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
   );
 
   return $element;
-}
-
-function _jcformatter_generate_widget() {
-  $output = '';
-  $output .= theme('jc_gallery', array(
-    'data' => 'Amitav',
-    'id' => 'Roy',
-  ));
-  return $output;
 }
