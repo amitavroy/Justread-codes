@@ -1,0 +1,5 @@
+name = JC Gallery Formatter
+description = "This will create a JC Gallery formatter for any field."
+package = Fields
+core = 7.x
+files[] = jcformatter.module
