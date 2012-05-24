@@ -1,3 +1,6 @@
+<?php
+
+?>
 <div id="gallery-content-container" class="gallery-container-div clearfix">
   <div id="jcarousel-list">
     
