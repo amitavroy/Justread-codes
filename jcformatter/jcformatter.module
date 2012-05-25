@@ -72,7 +72,6 @@ function jcformatter_field_formatter_settings_summary($field, $instance, $view_m
  * Implements hook_field_formatter_view().
  */
 function jcformatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  dsm($display);
 
   // if there are no images, dont do anything else
   if(empty($items)){
@@ -86,7 +85,6 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
 
   $element = array();
   $settings = $display['settings'];
-  // $data['image_style'] = $instance['display']['default']['settings']['pic_size'];
   $data['image_style'] = $display['settings']['pic_size'];
 
   switch ($display['type']) {
@@ -98,13 +96,13 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
           'uri' => $item['uri'],
         );
       }
+
+    $element = array(
+      '#theme' => 'jc_gallery',
+      '#data' => $data,
+    );
     break;
   }
-
-  $element = array(
-    '#theme' => 'jc_gallery',
-    '#data' => $data,
-  );
 
   return $element;
 }
