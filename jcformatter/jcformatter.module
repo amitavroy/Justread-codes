@@ -104,7 +104,7 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
 
   $module_path = drupal_get_path('module', 'jcformatter');
   drupal_add_js($module_path . '/scripts/jquery.jcarousel.min.js');
-  drupal_add_js($module_path . '/scripts/khelcustnode.js');
+  drupal_add_js($module_path . '/scripts/jcformatter.js');
   drupal_add_css($module_path . '/style/core.css');
 
   $element = array();

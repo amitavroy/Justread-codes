@@ -1,6 +1,3 @@
-<?php
-
-?>
 <div id="gallery-content-container" class="gallery-container-div clearfix">
   <div id="jcarousel-list">
     
@@ -40,14 +37,3 @@
 
   </div>
 </div>
-
-<?php
-// $image = '';
-// foreach ($data['images'] as $key => $value) {
-//   $image .= theme('image_style', array(
-//     'style_name' => $data['image_style'],
-//     'path' => $value['uri'],
-//   ));
-// }
-// print $image;
-?>
