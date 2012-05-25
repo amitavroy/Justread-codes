@@ -10,7 +10,7 @@ function init() {
     visible: 1,
     wrap: 'circular',
     initCallback: jcarouselinit,
-    // itemLoadCallback: eachstep,
+    // itemLoadCallback: eachstep, // This is where the analytics is puched
   });
 }
 
@@ -43,8 +43,6 @@ function jcarouselinit(carousel) {
 
 function eachstep() {
   var pathname = window.location.pathname;
-  // console.log(pathname);
   _gaq.push(['_trackPageview', pathname]);
-  // console.log();
   
 }
