@@ -14,7 +14,7 @@ function jcformatter_field_formatter_info() {
       'label' => t('Simple Gallery formatter'),
       'field types' => array('image'),
       'settings' => array(
-        'pic_size' => 'small',
+        'pic_size' => 'thumbnail',
       ),
     ),
   );
@@ -105,7 +105,8 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
   $module_path = drupal_get_path('module', 'jcformatter');
   drupal_add_js($module_path . '/scripts/jquery.jcarousel.min.js');
   drupal_add_js($module_path . '/scripts/jcformatter.js');
-  drupal_add_css($module_path . '/style/core.css');
+  $css_options = ".jcarousel-container{overflow: hidden;}";
+  drupal_add_css($css_options,'inline');
 
   $element = array();
   $settings = $display['settings'];
