@@ -33,6 +33,22 @@ function jcformatter_theme() {
 }
 
 /**
+ * Implements hook_menu().
+ */
+function jcformatter_menu() {
+  $items['admin/config/media/jcformatter'] = array(
+    'title' => 'JC Formtter settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('jcformatter_settings_form'),
+    // 'access arguments' => array(''),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'file' => 'jcformatter.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_field_formatter_settings_form().
  */
 function jcformatter_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
@@ -88,7 +104,7 @@ function jcformatter_field_formatter_view($entity_type, $entity, $field, $instan
   $data['image_style'] = $display['settings']['pic_size'];
 
   switch ($display['type']) {
-    case 'jc_gallery_simple':
+    case 'jc_gallery_simple': // For this formatter
       foreach ($items as $delta => $item) {
         $data['images'][$delta] = array(
           'alt' => $item['alt'],
