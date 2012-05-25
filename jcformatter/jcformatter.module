@@ -38,9 +38,17 @@ function jcformatter_theme() {
 function jcformatter_menu() {
   $items['admin/config/media/jcformatter'] = array(
     'title' => 'JC Formtter settings',
+    'description' => 'Configure the settings for JC formatter.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('jcformatter_settings_form'),
-    // 'access arguments' => array(''),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'jcformatter.admin.inc',
+  );
+  $items['admin/config/media/jcformatter/config'] = array(
+    'title' => 'JC Formtter settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('jcformatter_settings_form'),
+    'access arguments' => array('administer site configuration'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'file' => 'jcformatter.admin.inc',
   );
