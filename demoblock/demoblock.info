@@ -1,0 +1,6 @@
+name = Demo Blocks
+description = "This module handles all the demo blocks on the site."
+package = Justread Tutorials
+core = 7.x
+
+files[] = demoblocks.module

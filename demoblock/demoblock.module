@@ -1,0 +1,66 @@
+<?php
+
+/**
+ * This is the code for the demo block module.
+ * This is just for demo purpose when I was writing the
+ * code for the tutorial.
+ */
+
+/**
+ * Implements hook_block_info().
+ */
+function demoblock_block_info() {
+  $blocks['helloworld'] = array(
+    'info' => t('Demoblock: Hello world'),
+    'cache' => DRUPAL_CACHE_GLOBAL
+  );
+  $blocks['userdetails'] = array(
+    'info' => t('Demoblock: User details'),
+    'cache' => DRUPAL_NO_CACHE
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implementing hook_theme()
+ */
+function demoblock_theme() {
+  return array(
+    'userinfo' => array(
+      'template' => 'template/userinfo',
+    )
+  );
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function demoblock_block_view($delta = '') {
+  $block = array();
+
+  switch ($delta) {
+    case 'helloworld':
+      $block['subject'] = t('Hello World!');
+      $block['content'] = _demoblock_helloworld_content();
+      break;
+    
+    case 'userdetails':
+      global $user;
+      $block['subject'] = t('Your profile');
+      $block['content'] = theme('userinfo',array(
+        'username' => $user->name,
+        'email' => $user->mail,
+        'timezone' => $user->timezone,
+      ));
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Adding the content
+ */
+function _demoblock_helloworld_content() {
+  return 'Hello World!';
+}
