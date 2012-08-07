@@ -1,0 +1,6 @@
+name = Admin Form
+description = "This module will handle all the admin actitivites."
+package = Justread Tutorials
+core = 7.x
+
+files[] = adminform.module

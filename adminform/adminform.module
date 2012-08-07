@@ -1,0 +1,102 @@
+<?php
+
+/**
+ * Implementing hook_menu()
+ */
+function adminform_menu() {
+  
+  // The basic page.
+  $items['admin/jr'] = array(
+    'title' => t('SA Admin'),
+    'description' => t('Change the content of the contact form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('adminform_contact_form'),
+    'access arguments' => array('access administration pages'),
+    'weight' => 1
+  );
+  
+  // This will be the default page when the link is clicked.
+  $items['admin/jr/contactform'] = array(
+    'title' => t('Contact form'),
+    'description' => t('Change the content of the contact form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('adminform_contact_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => 2
+  );
+  
+  // This is just a copy for the tab and nothing else.
+  $items['admin/jr/somethingelse'] = array(
+    'title' => t('Some other form'),
+    'description' => t('Change the content of the contact form'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('adminform_contact_form'),
+    'access arguments' => array('access administration pages'),
+    'type' => MENU_LOCAL_TASK,
+    'weight' => 3
+  );
+  
+  return $items;
+}
+
+/**
+ * Building the form for the contact setting page.
+ */
+function adminform_contact_form() {
+  
+  // This is to specify the vertical tab holder. 
+  // One page can have two vertical tabs, but it's always one main tab with sub tabs.
+  $form['contactform'] = array(
+    '#type' => 'vertical_tabs',
+  );
+  
+  // This is the field fieldset.
+  $form['contactformset'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Attention, new comment posted'),
+    '#collapsible' => TRUE,
+    '#description' => t('Edit the email body for the new comment posted on the site.'),
+    '#group' => 'contactform'
+  );
+  
+  // Adding a simple textarea.
+  $form['contactformset']['mailbody'] = array(
+    '#type' => 'textarea',
+    '#required' => TRUE,
+    '#default_value' => 'Default',
+    '#title' => t('Contact mail.'),
+    '#description' => t('Body text when a new comment is posted by users.'),
+    '#group' => 'contactform'
+  );
+  
+  // This is second fieldset, this will make the two sections under the vertical tab.
+  $form['settingformset'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Site wide settings'),
+    '#collapsible' => TRUE,
+    '#description' => t('Set different settings which will effect site wide.'),
+    '#group' => 'contactform'
+  );
+  
+  
+  // Replicating the above textarea, this is just for demo.
+  $form['settingformset']['setting'] = array(
+    '#type' => 'textarea',
+    '#required' => TRUE,
+    '#default_value' => 'Default',
+    '#title' => t('Contact mail.'),
+    '#description' => t('Body text when a new comment is posted by users.'),
+    '#group' => 'contactform'
+  );
+  
+  $form['#submit'][] = 'adminform_contact_form_submit'; //Submit button call back.
+  return system_settings_form($form);
+}
+
+/**
+ * Logic behind the form submit.
+ */
+function adminform_contact_form_submit($form, $form_state) {
+  // Kept it empty, intentionally.
+}
