@@ -1,0 +1,95 @@
+<?php
+
+/**
+ * This is an example module on how to use Drupal's API to create tables
+ * with pager, sort and other default Drupal table features.
+ */
+
+/**
+ * Implements hook_menu()
+ */
+function mytable_menu() {
+  $items = array();
+  $items['tablepage'] = array(
+    'title' => t('This is a demo page to show Drupal 7 table API'),
+    'description' => t('As the title suggest, This is a demo page to show Drupal 7 table API'),
+    'page callback' => 'mytable_table_data',
+    'access arguments' => array("access content"),
+    'type' => MENU_CALLBACK
+  );
+
+  return $items;  
+}
+
+function mytable_table_data() {
+  // Initialising output
+  $output = '';
+
+  // Table header
+  $header = array(
+    array('data' => 'Title', 'field' => 'title'),
+    array('data' => 'Type', 'field' => 'type'),
+  );
+
+  // Setting the sort conditions
+  if(isset($_GET['sort']) && isset($_GET['order'])) {
+    // Sort it Ascending or Descending?
+    if($_GET['sort'] == 'asc')
+      $sort = 'ASC';
+    else
+      $sort = 'DESC';
+
+    // Which column will be sorted
+    switch($_GET['order']) {
+      case 'Title':
+        $order = 'title';
+        break;
+      case 'Type':
+        $order = 'type';
+        break;
+      default:
+        $order = 'title';
+    }
+  }
+  else {
+    $sort = 'ASC';
+    $order = 'title';
+  }
+
+  // Query object
+  $query = db_select("node", "n");
+  
+  // Adding fields
+  $query->fields('n',array('title','type'));
+
+  // Set order by
+  $query->orderBy($order, $sort);
+
+  // Pagination
+  $query = $query->extend('TableSort')->extend('PagerDefault')->limit(2);
+
+  // Executing query
+  $result = $query->execute();
+  
+  // Looping for filling the table rows
+  while($data = $result->fetchObject()) {
+    // Adding the rows
+    $rows[] = array($data->title, $data->type);
+  }
+
+  // Setting the output of the field
+  $output = theme_table(
+    array(
+      'header' => $header,
+      'rows' => $rows,
+      'attributes' => array(),
+      'sticky' => true,
+      'caption' => '',
+      'colgroups' => array(),
+      'empty' => t("Table has no row!") // The message to be displayed if table is empty
+    )
+  ).theme('pager');
+
+  // Returning the output
+  return $output;
+}

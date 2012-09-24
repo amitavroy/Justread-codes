@@ -1,0 +1,8 @@
+name = My Table
+description = This is the example for creating tables using Drupal 7 API.
+package = Justread
+version = VERSION
+core = 7.x
+files[] = mytable.module
+
+project = "justread"
